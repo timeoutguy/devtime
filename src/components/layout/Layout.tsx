@@ -1,13 +1,13 @@
 import React, { PropsWithChildren } from 'react';
 
-const Layout: React.FC<PropsWithChildren> = ({ children }) => {
+import { Navbar } from '../index';
+
+export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div>
-      <header></header>
+      <Navbar />
       <main> {children} </main>
       <footer></footer>
     </div>
   );
 };
-
-export default Layout;
