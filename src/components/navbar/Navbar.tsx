@@ -23,7 +23,7 @@ export const Navbar: React.FC = () => {
         <Link href="/" fontSize="xl" color="white" _hover={{ textDecor: 'none' }}>
           DevTime
         </Link>
-        <Box display={{ base: 'none', md: 'block' }}>
+        <Box>
           {userIsAuthenticated() ? (
             <Flex justifyContent="center" alignItems="center" color="white">
               <Tooltip label="Create" aria-label="Create">
