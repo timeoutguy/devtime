@@ -1,3 +1,4 @@
+import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 
 import './App.scss';
@@ -6,9 +7,11 @@ import AppRoutes from './routes/AppRoutes';
 
 const App: React.FC = () => {
   return (
-    <Layout>
-      <AppRoutes />
-    </Layout>
+    <ChakraProvider>
+      <Layout>
+        <AppRoutes />
+      </Layout>
+    </ChakraProvider>
   );
 };
 
