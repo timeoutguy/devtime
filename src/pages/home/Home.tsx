@@ -25,6 +25,11 @@ export const Home: React.FC = () => {
       </Flex>
       <Search />
       <PostCard></PostCard>
+      <PostCard></PostCard>
+      <PostCard></PostCard>
+      <PostCard></PostCard>
+      <PostCard></PostCard>
+      <PostCard></PostCard>
     </Box>
   );
 };
