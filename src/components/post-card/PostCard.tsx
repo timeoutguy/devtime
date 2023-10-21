@@ -11,11 +11,17 @@ export const PostCard = () => {
         <Link href="/" fontWeight="bold" cursor="pointer">
           Hi, Im looking for a COBOL developer
         </Link>
-        <Flex alignItems="center" color="gray.500">
+        <Flex
+          alignItems={{ md: 'center' }}
+          color="gray.500"
+          direction={{ base: 'column', md: 'row' }}
+        >
           <Text textDecoration="underline" mr={2} cursor="pointer">
             2 Comments
           </Text>
-          <Text mr={2}> &middot; </Text>
+          <Text mr={2} display={{ base: 'none', md: 'block' }}>
+            &middot;
+          </Text>
           <Text>
             4 hrs ago by <Link textDecoration="underline"> Marcus Vinícius</Link>, Front end
             Developer
