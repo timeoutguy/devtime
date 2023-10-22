@@ -17,7 +17,7 @@ export const createPost: React.FC = () => {
       </Box>
       <Flex justifyContent="flex-end" alignItems="center">
         <Link href="/">
-          <button className="text-gray-600 px-4 py-1 mr-4 hover:bg-gray-200 rounded">Cancel</button>
+          <button className="text-gray-600 px-4 py-1 mr-2 hover:bg-gray-200 rounded">Cancel</button>
         </Link>
         <button className="bg-charcoal text-white px-4 py-1 rounded font-bold"> Publish </button>
       </Flex>
