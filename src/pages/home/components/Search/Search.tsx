@@ -6,14 +6,14 @@ export const Search = () => {
   const [selectedOption, setSelectedOption] = useState('top');
 
   return (
-    <Box>
+    <Box mb={8}>
       <Flex justifyContent="space-between" alignItems="center" mb={2}>
         <Text className="font-bold"> Posts </Text>
         <Flex>
           <Text
             onClick={() => setSelectedOption('top')}
             color={selectedOption === 'top' ? 'white' : 'gray.500'}
-            bg={selectedOption === 'top' ? 'blackAlpha.800' : 'transparent'}
+            className={selectedOption === 'top' ? 'bg-charcoal' : 'bg-none'}
             mr={1}
             cursor="pointer"
             px={4}
@@ -26,7 +26,7 @@ export const Search = () => {
           <Text
             onClick={() => setSelectedOption('recent')}
             color={selectedOption === 'recent' ? 'white' : 'gray.500'}
-            bg={selectedOption === 'recent' ? 'blackAlpha.800' : 'transparent'}
+            className={selectedOption === 'recent' ? 'bg-charcoal' : 'bg-none'}
             cursor="pointer"
             px={4}
             py={2}

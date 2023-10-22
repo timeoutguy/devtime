@@ -2,6 +2,8 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
+import { PostCard } from '../../components';
+
 import { Search } from './components/Search';
 
 export const Home: React.FC = () => {
@@ -22,6 +24,12 @@ export const Home: React.FC = () => {
         </Text>
       </Flex>
       <Search />
+      <PostCard></PostCard>
+      <PostCard></PostCard>
+      <PostCard></PostCard>
+      <PostCard></PostCard>
+      <PostCard></PostCard>
+      <PostCard></PostCard>
     </Box>
   );
 };
