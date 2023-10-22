@@ -13,25 +13,23 @@ export const Search = () => {
           <Text
             onClick={() => setSelectedOption('top')}
             color={selectedOption === 'top' ? 'white' : 'gray.500'}
-            className={selectedOption === 'top' ? 'bg-charcoal' : 'bg-none'}
+            className={selectedOption === 'top' ? 'bg-charcoal rounded' : 'bg-none rounded'}
             mr={1}
             cursor="pointer"
             px={4}
             py={2}
-            borderRadius={50}
-            transition="ease-in 0.3s"
+            transition="background-color ease-in 0.3s"
           >
             Top
           </Text>
           <Text
             onClick={() => setSelectedOption('recent')}
             color={selectedOption === 'recent' ? 'white' : 'gray.500'}
-            className={selectedOption === 'recent' ? 'bg-charcoal' : 'bg-none'}
+            className={selectedOption === 'recent' ? 'bg-charcoal rounded' : 'bg-none rounded'}
             cursor="pointer"
             px={4}
             py={2}
-            borderRadius={50}
-            transition="ease-in 0.3s"
+            transition="background-color ease-in 0.3s"
           >
             Recent
           </Text>
