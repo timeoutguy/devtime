@@ -27,7 +27,7 @@ export const Navbar: React.FC = () => {
           {userIsAuthenticated() ? (
             <Flex justifyContent="center" alignItems="center" color="white">
               <Tooltip label="Create" aria-label="Create">
-                <Link mr={4}>
+                <Link mr={4} href="/create">
                   <PlusIcon className="h-6 w-6" />
                 </Link>
               </Tooltip>
