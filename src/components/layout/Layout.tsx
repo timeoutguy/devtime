@@ -1,13 +1,16 @@
+import { Box } from '@chakra-ui/react';
 import React, { PropsWithChildren } from 'react';
 
 import { Navbar } from '../index';
 
 export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div>
+    <Box>
       <Navbar />
-      <main> {children} </main>
+      <Box as="main" py="16" px={{ base: 16, xl: 96 }}>
+        {children}
+      </Box>
       <footer></footer>
-    </div>
+    </Box>
   );
 };
