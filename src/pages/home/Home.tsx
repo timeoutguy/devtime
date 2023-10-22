@@ -8,7 +8,7 @@ import { Search } from './components/Search';
 
 export const Home: React.FC = () => {
   return (
-    <Box py="16" px={{ base: 16, xl: 72 }}>
+    <Box>
       <Flex
         justifyContent="center"
         alignItems="center"
