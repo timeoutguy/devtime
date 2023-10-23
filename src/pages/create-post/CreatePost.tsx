@@ -3,7 +3,7 @@ import React from 'react';
 
 import { Editor } from '../../components/editor';
 
-export const createPost: React.FC = () => {
+export const CreatePost: React.FC = () => {
   return (
     <Box>
       <Text as="h1" fontSize="2xl" fontWeight="bold" mb={4}>
