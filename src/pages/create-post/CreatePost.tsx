@@ -1,5 +1,5 @@
 import { Box, Flex, Input, InputGroup, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CustomModal } from '../../components';
@@ -17,6 +17,20 @@ export const CreatePost: React.FC = () => {
   const publishPost: any = () => {
     console.log('Published');
   };
+
+  const handleBeforeUnload = (e: any) => {
+    e.preventDefault();
+    e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, []);
 
   return (
     <>
