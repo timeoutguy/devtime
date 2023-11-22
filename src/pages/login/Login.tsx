@@ -11,15 +11,18 @@ import {
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 import React, { FormEvent, useState } from 'react';
 
+import { ReactComponent as GithubLogo } from '../../assets/svg/github-logo.svg';
+import { ReactComponent as GoogleLogo } from '../../assets/svg/google-logo.svg';
 import { useAuth } from '../../hooks/useAuth';
 import './styles.scss';
+import { ButtonType } from '../../types/login-buttons.type';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<ButtonType | false>(false);
 
   const emailRelatedErrors = ['auth/invalid-email', 'auth/invalid-login-credentials'];
   const passwordRelatedErrors = ['auth/invalid-login-credentials'];
@@ -27,18 +30,18 @@ export const Login: React.FC = () => {
   const user = useAuth();
 
   const handleLogin = (event: FormEvent) => {
-    setIsLoading(true);
+    setIsLoading(ButtonType.EMAIL);
     event.preventDefault();
 
     user
       .authenticate(email, password)
       .then((userCredential) => {
-        user.setUser(userCredential.user);
         setIsLoading(false);
+        user.setUser(userCredential.user);
       })
       .catch((err) => {
-        setLoginError(err.code);
         setIsLoading(false);
+        setLoginError(err.code);
       });
   };
 
@@ -83,16 +86,46 @@ export const Login: React.FC = () => {
             </InputRightElement>
           </InputGroup>
         </FormControl>
-        <Button type="submit" isLoading={isLoading}>
-          Login
+        <Button
+          colorScheme="green"
+          type="submit"
+          isLoading={isLoading == ButtonType.EMAIL}
+          isDisabled={isLoading && isLoading != ButtonType.EMAIL}
+          mb={4}
+        >
+          Sign in
         </Button>
         <h2 className="text-between-lines mb-4">
           <span className="text-gray-500"> Or </span>
         </h2>
       </form>
-      <FormControl>
-        <FormLabel> </FormLabel>
-      </FormControl>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        flexDir="column"
+        className="w-96"
+      >
+        <Button
+          isLoading={isLoading == ButtonType.GOOGLE}
+          isDisabled={isLoading && isLoading != ButtonType.GOOGLE}
+          leftIcon={<GoogleLogo width="24" />}
+          width="100%"
+          mb={4}
+        >
+          Sign in with Google
+        </Button>
+        <Button
+          isLoading={isLoading == ButtonType.GITHUB}
+          isDisabled={isLoading && isLoading != ButtonType.GITHUB}
+          colorScheme="none"
+          className="bg-charcoal hover:bg-gray-900"
+          leftIcon={<GithubLogo width="24" height="24" />}
+          width="100%"
+        >
+          Sign in with Google
+        </Button>
+      </Box>
     </Box>
   );
 };
