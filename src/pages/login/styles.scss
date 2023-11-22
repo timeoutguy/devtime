@@ -1,0 +1,13 @@
+.text-between-lines {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid; 
+  @apply border-gray-200;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+
+  span {
+    background-color: #fff;
+    padding: 0 10px;
+  }
+}

@@ -12,6 +12,7 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 import React, { FormEvent, useState } from 'react';
 
 import { useAuth } from '../../hooks/useAuth';
+import './styles.scss';
 
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -85,6 +86,9 @@ export const Login: React.FC = () => {
         <Button type="submit" isLoading={isLoading}>
           Login
         </Button>
+        <h2 className="text-between-lines mb-4">
+          <span className="text-gray-500"> Or </span>
+        </h2>
       </form>
       <FormControl>
         <FormLabel> </FormLabel>
