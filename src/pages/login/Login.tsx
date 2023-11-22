@@ -16,9 +16,12 @@ import { useAuth } from '../../hooks/useAuth';
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loginError, setLoginError] = useState(null);
+  const [loginError, setLoginError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const emailRelatedErrors = ['auth/invalid-email', 'auth/invalid-login-credentials'];
+  const passwordRelatedErrors = ['auth/invalid-login-credentials'];
 
   const user = useAuth();
 
@@ -53,6 +56,7 @@ export const Login: React.FC = () => {
             placeholder="email@devtime.io"
             size="lg"
             onChange={(event) => setEmail(event.currentTarget.value)}
+            isInvalid={emailRelatedErrors.includes(loginError)}
           />
         </FormControl>
         <FormControl mb={4}>
@@ -63,6 +67,7 @@ export const Login: React.FC = () => {
               placeholder="**********"
               size="lg"
               onChange={(event) => setPassword(event.currentTarget.value)}
+              isInvalid={passwordRelatedErrors.includes(loginError)}
             />
             <InputRightElement
               cursor="pointer"
