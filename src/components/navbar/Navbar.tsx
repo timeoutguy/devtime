@@ -1,13 +1,13 @@
 import { Avatar, Box, Flex, Menu, MenuButton, MenuItem, MenuList, Tooltip } from '@chakra-ui/react';
 import { ArrowLeftOnRectangleIcon, PlusIcon, UserIcon } from '@heroicons/react/24/solid';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { firebaseAuth } from '../../config';
-import { AuthContext } from '../../contexts';
+import { useAuth } from '../../hooks/useAuth';
 
 export const Navbar: React.FC = () => {
-  const authContext = useContext(AuthContext);
+  const auth = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -17,7 +17,7 @@ export const Navbar: React.FC = () => {
         navigate('/');
       })
       .catch(() => {
-        authContext.setUser(null);
+        auth.setUser(null);
         navigate('/');
       });
   };
@@ -28,7 +28,7 @@ export const Navbar: React.FC = () => {
           DevTime
         </Link>
         <Box>
-          {authContext.user ? (
+          {auth.user ? (
             <Flex justifyContent="center" alignItems="center" color="white">
               <Tooltip label="Create" aria-label="Create">
                 <Link className="mr-4" to="/create">
