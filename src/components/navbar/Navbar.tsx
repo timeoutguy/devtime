@@ -1,13 +1,26 @@
 import { Avatar, Box, Flex, Menu, MenuButton, MenuItem, MenuList, Tooltip } from '@chakra-ui/react';
 import { ArrowLeftOnRectangleIcon, PlusIcon, UserIcon } from '@heroicons/react/24/solid';
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
+import { firebaseAuth } from '../../config';
 import { AuthContext } from '../../contexts';
 
 export const Navbar: React.FC = () => {
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    firebaseAuth
+      .signOut()
+      .then(() => {
+        navigate('/');
+      })
+      .catch(() => {
+        authContext.setUser(null);
+        navigate('/');
+      });
+  };
   return (
     <Box as="nav" py={4} px={8} className="border-b-2 bg-charcoal" borderColor="gray.100">
       <Flex justifyContent="space-between" alignItems="center">
@@ -33,7 +46,7 @@ export const Navbar: React.FC = () => {
                   <MenuItem as="a" href="/">
                     My posts
                   </MenuItem>
-                  <MenuItem color="red" _hover={{ bg: 'red.50' }}>
+                  <MenuItem color="red" _hover={{ bg: 'red.50' }} onClick={handleLogout}>
                     <ArrowLeftOnRectangleIcon className="h-5 w-5 mr-1"></ArrowLeftOnRectangleIcon>
                     Log out
                   </MenuItem>
