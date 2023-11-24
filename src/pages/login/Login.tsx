@@ -119,7 +119,7 @@ export const Login: React.FC = () => {
           leftIcon={<GithubLogo width="24" height="24" />}
           width="100%"
         >
-          Sign in with Google
+          Sign in with Github
         </Button>
       </Box>
     </Box>
