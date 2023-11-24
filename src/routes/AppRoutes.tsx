@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { Layout, Navbar } from '../components';
 import { useAuth } from '../hooks/useAuth';
-import { Home, CreatePost, Login } from '../pages';
+import { Home, CreatePost, Login, SignUp } from '../pages';
 
 import { ProtectedRoute } from './ProtectedRoute';
 
@@ -21,6 +21,7 @@ const AppRoutes: React.FC = () => {
           </Route>
           <Route element={<ProtectedRoute redirectTo="/" isAllowed={!user} />}>
             <Route path="/login" Component={Login} />
+            <Route path="/signup" Component={SignUp} />
           </Route>
         </Routes>
       </Layout>

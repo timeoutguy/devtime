@@ -63,7 +63,7 @@ export const Navbar: React.FC = () => {
               <Link to="login" className="mr-4">
                 Login
               </Link>
-              <Link to="login">Sign Up</Link>
+              <Link to="signup">Sign Up</Link>
             </Box>
           )}
         </Box>
