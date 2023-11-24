@@ -4,6 +4,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout, Navbar } from '../components';
 import { Home, CreatePost, Login } from '../pages';
 
+import { ProtectedRoute } from './ProtectedRoute';
+
 const AppRoutes: React.FC = () => {
   return (
     <BrowserRouter>
@@ -11,7 +13,9 @@ const AppRoutes: React.FC = () => {
       <Layout>
         <Routes>
           <Route path="/" Component={Home} />
-          <Route path="/create" Component={CreatePost} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/create" element={<CreatePost />}></Route>
+          </Route>
           <Route path="/login" Component={Login} />
         </Routes>
       </Layout>
