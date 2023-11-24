@@ -1,15 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { useAuth } from '../hooks/useAuth';
-
 type ProtectedRouteProps = {
   redirectTo?: string;
+  isAllowed: boolean;
 };
 
-export const ProtectedRoute = ({ redirectTo = '/login' }: ProtectedRouteProps) => {
-  const { user } = useAuth();
-
-  if (!user) {
+export const ProtectedRoute = ({ redirectTo = '/login', isAllowed }: ProtectedRouteProps) => {
+  if (!isAllowed) {
     return <Navigate to={redirectTo} replace />;
   }
 
