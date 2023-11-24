@@ -1,12 +1,12 @@
 import { Avatar, Box, Flex, Menu, MenuButton, MenuItem, MenuList, Tooltip } from '@chakra-ui/react';
 import { ArrowLeftOnRectangleIcon, PlusIcon, UserIcon } from '@heroicons/react/24/solid';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import { AuthContext } from '../../contexts';
+
 export const Navbar: React.FC = () => {
-  const userIsAuthenticated = () => {
-    return false;
-  };
+  const authContext = useContext(AuthContext);
 
   return (
     <Box as="nav" py={4} px={8} className="border-b-2 bg-charcoal" borderColor="gray.100">
@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
           DevTime
         </Link>
         <Box>
-          {userIsAuthenticated() ? (
+          {authContext.user ? (
             <Flex justifyContent="center" alignItems="center" color="white">
               <Tooltip label="Create" aria-label="Create">
                 <Link className="mr-4" to="/create">
