@@ -13,7 +13,7 @@ import React, { FormEvent, useState } from 'react';
 
 import { ReactComponent as GithubLogo } from '../../assets/svg/github-logo.svg';
 import { ReactComponent as GoogleLogo } from '../../assets/svg/google-logo.svg';
-import { useAuth } from '../../hooks/useAuth';
+import { firebaseAuth } from '../../config';
 import './styles.scss';
 import { ButtonType } from '../../types/login-buttons.type';
 
