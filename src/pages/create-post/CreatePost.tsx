@@ -14,9 +14,7 @@ export const CreatePost: React.FC = () => {
     return navigate('/');
   };
 
-  const publishPost: any = () => {
-    console.log('Published');
-  };
+  const publishPost: any = () => {};
 
   const handleBeforeUnload = (e: any) => {
     e.preventDefault();
