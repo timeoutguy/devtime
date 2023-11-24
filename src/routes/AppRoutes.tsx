@@ -19,7 +19,9 @@ const AppRoutes: React.FC = () => {
           <Route element={<ProtectedRoute isAllowed={!!user} />}>
             <Route path="/create" element={<CreatePost />}></Route>
           </Route>
-          <Route path="/login" Component={Login} />
+          <Route element={<ProtectedRoute redirectTo="/" isAllowed={!user} />}>
+            <Route path="/login" Component={Login} />
+          </Route>
         </Routes>
       </Layout>
     </BrowserRouter>
