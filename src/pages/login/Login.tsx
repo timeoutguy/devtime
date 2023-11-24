@@ -9,6 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { FormEvent, useState } from 'react';
 
 import { ReactComponent as GithubLogo } from '../../assets/svg/github-logo.svg';
@@ -27,28 +28,23 @@ export const Login: React.FC = () => {
   const emailRelatedErrors = ['auth/invalid-email', 'auth/invalid-login-credentials'];
   const passwordRelatedErrors = ['auth/invalid-login-credentials'];
 
-  const user = useAuth();
-
   const handleLogin = (event: FormEvent) => {
     setIsLoading(ButtonType.EMAIL);
+    setLoginError('');
     event.preventDefault();
 
-    user
-      .authenticate(email, password)
-      .then((userCredential) => {
+    signInWithEmailAndPassword(firebaseAuth, email, password)
+      .then(() => {
         setIsLoading(false);
-        user.setUser(userCredential.user);
       })
       .catch((err) => {
-        setIsLoading(false);
         setLoginError(err.code);
+        setIsLoading(false);
       });
   };
 
   return (
     <Box justifyContent="center" alignItems="center" display="flex" flexDirection="column" p={4}>
-      {user && <h1> {(user as any).photoUrl} </h1>}
-      {loginError && <h1> {loginError} </h1>}
       <Text as="h1" fontSize="2xl" fontWeight="bold" mb={4}>
         Sign in
       </Text>
