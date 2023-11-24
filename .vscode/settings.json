@@ -1,5 +1,6 @@
 {
     "editor.codeActionsOnSave": {
         "source.fixAll": true
-    }
+    },
+    "scss.lint.unknownAtRules": "ignore"
 }

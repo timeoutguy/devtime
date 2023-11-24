@@ -1,0 +1,9 @@
+@import "utils/variables";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  color: $charcoal;
+  background-color: $white;
+}
