@@ -9,7 +9,12 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
 import React, { FormEvent, useState } from 'react';
 
 import { ReactComponent as GithubLogo } from '../../assets/svg/github-logo.svg';
@@ -29,6 +34,7 @@ export const Login: React.FC = () => {
   const passwordRelatedErrors = ['auth/invalid-login-credentials'];
 
   const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
 
   const handleLogin = (event: FormEvent) => {
     setIsLoading(ButtonType.EMAIL);
@@ -50,6 +56,20 @@ export const Login: React.FC = () => {
     setLoginError('');
 
     signInWithPopup(firebaseAuth, googleProvider)
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setLoginError(err.code);
+        setIsLoading(false);
+      });
+  };
+
+  const handeLoginWithGithub = () => {
+    setIsLoading(ButtonType.GITHUB);
+    setLoginError('');
+
+    signInWithPopup(firebaseAuth, githubProvider)
       .then(() => {
         setIsLoading(false);
       })
@@ -135,6 +155,7 @@ export const Login: React.FC = () => {
           className="bg-charcoal hover:bg-gray-900"
           leftIcon={<GithubLogo width="24" height="24" />}
           width="100%"
+          onClick={handeLoginWithGithub}
         >
           Sign in with Github
         </Button>
