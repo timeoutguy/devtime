@@ -9,7 +9,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import React, { FormEvent, useState } from 'react';
 
 import { ReactComponent as GithubLogo } from '../../assets/svg/github-logo.svg';
@@ -28,12 +28,28 @@ export const Login: React.FC = () => {
   const emailRelatedErrors = ['auth/invalid-email', 'auth/invalid-login-credentials'];
   const passwordRelatedErrors = ['auth/invalid-login-credentials'];
 
+  const googleProvider = new GoogleAuthProvider();
+
   const handleLogin = (event: FormEvent) => {
     setIsLoading(ButtonType.EMAIL);
     setLoginError('');
     event.preventDefault();
 
     signInWithEmailAndPassword(firebaseAuth, email, password)
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setLoginError(err.code);
+        setIsLoading(false);
+      });
+  };
+
+  const handeLoginWithGoole = () => {
+    setIsLoading(ButtonType.GOOGLE);
+    setLoginError('');
+
+    signInWithPopup(firebaseAuth, googleProvider)
       .then(() => {
         setIsLoading(false);
       })
@@ -108,6 +124,7 @@ export const Login: React.FC = () => {
           leftIcon={<GoogleLogo width="24" />}
           width="100%"
           mb={4}
+          onClick={handeLoginWithGoole}
         >
           Sign in with Google
         </Button>
