@@ -37,7 +37,12 @@ export const Navbar: React.FC = () => {
               </Tooltip>
               <Menu>
                 <MenuButton>
-                  <Avatar cursor="pointer" size="sm" icon={<UserIcon className="h-6 w-6" />} />
+                  <Avatar
+                    cursor="pointer"
+                    size="sm"
+                    icon={<UserIcon className="h-6 w-6" />}
+                    src={auth.user.photoURL || ''}
+                  />
                 </MenuButton>
                 <MenuList color="black">
                   <MenuItem as="a" href="/">
