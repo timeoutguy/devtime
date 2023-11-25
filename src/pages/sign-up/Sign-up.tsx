@@ -14,16 +14,22 @@ import { FormEvent, useState } from 'react';
 
 import { ReactComponent as GithubLogo } from '../../assets/svg/github-logo.svg';
 import { ReactComponent as GoogleLogo } from '../../assets/svg/google-logo.svg';
+import { ButtonType } from '../../types/login-buttons.type';
 
 export const SignUp = () => {
   const [displayName, setDisplayName] = useState<string | null>(null);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<ButtonType | false>(false);
+  const [loginError, setLoginError] = useState<string>('');
+
   const auth = getAuth();
 
   const handleSignUp = (event: FormEvent) => {
     event.preventDefault();
+    setIsLoading(ButtonType.EMAIL);
+    setLoginError('');
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
@@ -43,6 +49,11 @@ export const SignUp = () => {
       <Text as="h1" fontSize="2xl" fontWeight="bold" mb={4}>
         Sign Up
       </Text>
+      {isLoading && (
+        <p>
+          {loginError} {isLoading}
+        </p>
+      )}
       <form className="flex flex-col w-96" onSubmit={handleSignUp}>
         <FormControl mb={4}>
           <FormLabel> Display name </FormLabel>
@@ -84,7 +95,13 @@ export const SignUp = () => {
             </InputRightElement>
           </InputGroup>
         </FormControl>
-        <Button colorScheme="green" type="submit" mb={4}>
+        <Button
+          colorScheme="green"
+          type="submit"
+          mb={4}
+          isLoading={isLoading == ButtonType.EMAIL}
+          isDisabled={isLoading && isLoading != ButtonType.EMAIL}
+        >
           Sign up
         </Button>
         <h2 className="text-between-lines mb-4">
@@ -98,10 +115,18 @@ export const SignUp = () => {
         flexDir="column"
         className="w-96"
       >
-        <Button width="100%" mb={4} leftIcon={<GoogleLogo width="24" height="24" />}>
+        <Button
+          isLoading={isLoading == ButtonType.GOOGLE}
+          isDisabled={isLoading && isLoading != ButtonType.GOOGLE}
+          width="100%"
+          mb={4}
+          leftIcon={<GoogleLogo width="24" height="24" />}
+        >
           Sign up with Google
         </Button>
         <Button
+          isLoading={isLoading == ButtonType.GITHUB}
+          isDisabled={isLoading && isLoading != ButtonType.GITHUB}
           colorScheme="none"
           className="bg-charcoal hover:bg-gray-900"
           width="100%"
