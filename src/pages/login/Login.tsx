@@ -21,8 +21,8 @@ import { ReactComponent as GithubLogo } from '../../assets/svg/github-logo.svg';
 import { ReactComponent as GoogleLogo } from '../../assets/svg/google-logo.svg';
 import { firebaseAuth } from '../../config';
 import './styles.scss';
+import { loginErrorMessage } from '../../types/error-messages.type';
 import { ButtonType } from '../../types/login-buttons.type';
-
 export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,47 +36,36 @@ export const Login: React.FC = () => {
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
 
-  const handleLogin = (event: FormEvent) => {
-    setIsLoading(ButtonType.EMAIL);
+  const handleLogin = (
+    type: ButtonType,
+    event?: FormEvent,
+    provider?: GoogleAuthProvider | GithubAuthProvider
+  ) => {
+    setIsLoading(type);
     setLoginError('');
-    event.preventDefault();
+    if (event) {
+      event.preventDefault();
+    }
 
-    signInWithEmailAndPassword(firebaseAuth, email, password)
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setLoginError(err.code);
-        setIsLoading(false);
-      });
-  };
-
-  const handeLoginWithGoole = () => {
-    setIsLoading(ButtonType.GOOGLE);
-    setLoginError('');
-
-    signInWithPopup(firebaseAuth, googleProvider)
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setLoginError(err.code);
-        setIsLoading(false);
-      });
-  };
-
-  const handeLoginWithGithub = () => {
-    setIsLoading(ButtonType.GITHUB);
-    setLoginError('');
-
-    signInWithPopup(firebaseAuth, githubProvider)
-      .then(() => {
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setLoginError(err.code);
-        setIsLoading(false);
-      });
+    if (provider) {
+      signInWithPopup(firebaseAuth, provider)
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setLoginError(err.code);
+          setIsLoading(false);
+        });
+    } else {
+      signInWithEmailAndPassword(firebaseAuth, email, password)
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setLoginError(err.code);
+          setIsLoading(false);
+        });
+    }
   };
 
   return (
@@ -84,7 +73,11 @@ export const Login: React.FC = () => {
       <Text as="h1" fontSize="2xl" fontWeight="bold" mb={4}>
         Sign in
       </Text>
-      <form onSubmit={handleLogin} className="flex flex-col w-96">
+      {loginError && <p> {loginError} </p>}
+      <form
+        onSubmit={(event) => handleLogin(ButtonType.EMAIL, event)}
+        className="flex flex-col w-96"
+      >
         <FormControl mb={4}>
           <FormLabel> E-mail </FormLabel>
           <Input
@@ -94,6 +87,11 @@ export const Login: React.FC = () => {
             onChange={(event) => setEmail(event.currentTarget.value)}
             isInvalid={emailRelatedErrors.includes(loginError)}
           />
+          {emailRelatedErrors.includes(loginError) && (
+            <Text mt={1} color="red" fontSize="sm">
+              {loginErrorMessage[loginError]}
+            </Text>
+          )}
         </FormControl>
         <FormControl mb={4}>
           <FormLabel> Password </FormLabel>
@@ -144,7 +142,7 @@ export const Login: React.FC = () => {
           leftIcon={<GoogleLogo width="24" />}
           width="100%"
           mb={4}
-          onClick={handeLoginWithGoole}
+          onClick={() => handleLogin(ButtonType.GOOGLE, undefined, googleProvider)}
         >
           Sign in with Google
         </Button>
@@ -155,7 +153,7 @@ export const Login: React.FC = () => {
           className="bg-charcoal hover:bg-gray-900"
           leftIcon={<GithubLogo width="24" height="24" />}
           width="100%"
-          onClick={handeLoginWithGithub}
+          onClick={() => handleLogin(ButtonType.GITHUB, undefined, githubProvider)}
         >
           Sign in with Github
         </Button>
