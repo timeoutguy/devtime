@@ -31,7 +31,7 @@ export const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState<ButtonType | false>(false);
 
   const emailRelatedErrors = ['auth/invalid-email'];
-  const passwordRelatedErrors = ['auth/invalid-login-credentials'];
+  const passwordRelatedErrors = ['auth/invalid-login-credentials', 'auth/missing-password'];
 
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
