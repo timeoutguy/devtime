@@ -30,7 +30,7 @@ export const Login: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState<ButtonType | false>(false);
 
-  const emailRelatedErrors = ['auth/invalid-email', 'auth/invalid-login-credentials'];
+  const emailRelatedErrors = ['auth/invalid-email'];
   const passwordRelatedErrors = ['auth/invalid-login-credentials'];
 
   const googleProvider = new GoogleAuthProvider();
@@ -73,7 +73,6 @@ export const Login: React.FC = () => {
       <Text as="h1" fontSize="2xl" fontWeight="bold" mb={4}>
         Sign in
       </Text>
-      {loginError && <p> {loginError} </p>}
       <form
         onSubmit={(event) => handleLogin(ButtonType.EMAIL, event)}
         className="flex flex-col w-96"
@@ -115,6 +114,11 @@ export const Login: React.FC = () => {
               )}
             </InputRightElement>
           </InputGroup>
+          {passwordRelatedErrors.includes(loginError) && (
+            <Text mt={1} color="red" fontSize="sm">
+              {loginErrorMessage[loginError]}
+            </Text>
+          )}
         </FormControl>
         <Button
           colorScheme="green"
