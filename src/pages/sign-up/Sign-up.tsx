@@ -10,10 +10,11 @@ import {
 } from '@chakra-ui/react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 import { User, createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 
 import { ReactComponent as GithubLogo } from '../../assets/svg/github-logo.svg';
 import { ReactComponent as GoogleLogo } from '../../assets/svg/google-logo.svg';
+import { signUpErrorMessage } from '../../types/error-messages.type';
 import { ButtonType } from '../../types/login-buttons.type';
 
 export const SignUp = () => {
@@ -22,20 +23,30 @@ export const SignUp = () => {
   const [password, setPassword] = useState<string>('');
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<ButtonType | false>(false);
-  const [loginError, setLoginError] = useState<string>('');
+  const [signUpError, setSignUpError] = useState<string>('');
 
   const auth = getAuth();
+
+  const emailRelatedErrors = ['auth/invalid-email'];
+  const passwordRelatedErrors = ['auth/missing-password', 'auth/weak-password'];
+
+  useEffect(() => {
+    setSignUpError('');
+  }, [email, password]);
 
   const handleSignUp = (event: FormEvent) => {
     event.preventDefault();
     setIsLoading(ButtonType.EMAIL);
-    setLoginError('');
+    setSignUpError('');
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((result) => {
         changeDisplayNameOnFirebase(result.user);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setSignUpError(err.code);
+        setIsLoading(false);
+      });
   };
 
   const changeDisplayNameOnFirebase = (user: User) => {
@@ -49,11 +60,6 @@ export const SignUp = () => {
       <Text as="h1" fontSize="2xl" fontWeight="bold" mb={4}>
         Sign Up
       </Text>
-      {isLoading && (
-        <p>
-          {loginError} {isLoading}
-        </p>
-      )}
       <form className="flex flex-col w-96" onSubmit={handleSignUp}>
         <FormControl mb={4}>
           <FormLabel> Display name </FormLabel>
@@ -71,7 +77,13 @@ export const SignUp = () => {
             placeholder="email@devtime.io"
             size="lg"
             onChange={(event) => setEmail(event.target.value)}
+            isInvalid={emailRelatedErrors.includes(signUpError)}
           />
+          {emailRelatedErrors.includes(signUpError) && (
+            <Text mt={1} color="red" fontSize="sm">
+              {signUpErrorMessage[signUpError]}
+            </Text>
+          )}
         </FormControl>
         <FormControl mb={4}>
           <FormLabel> Password </FormLabel>
@@ -81,6 +93,7 @@ export const SignUp = () => {
               placeholder="**********"
               size="lg"
               onChange={(event) => setPassword(event.target.value)}
+              isInvalid={passwordRelatedErrors.includes(signUpError)}
             />
             <InputRightElement
               cursor="pointer"
@@ -94,6 +107,11 @@ export const SignUp = () => {
               )}
             </InputRightElement>
           </InputGroup>
+          {passwordRelatedErrors.includes(signUpError) && (
+            <Text mt={1} color="red" fontSize="sm">
+              {signUpErrorMessage[signUpError]}
+            </Text>
+          )}
         </FormControl>
         <Button
           colorScheme="green"
